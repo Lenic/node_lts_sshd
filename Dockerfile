@@ -13,7 +13,7 @@ RUN apt update && \
     rm -rf a.tar.xz && \
     echo "PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin" >> ~/.bashrc
 
-RUN source ~/.bashrc && \
+RUN PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin && \
     npm i -g yarn --registry=http://registry.npm.taobao.org && \
     echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf && \
     chsh -s $(which zsh) && \

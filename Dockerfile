@@ -13,6 +13,8 @@ RUN apt update && \
     rm -rf a.tar.xz && \
     sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
     echo "PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin" >> ~/.zshrc && \
+    chsh -s $(which zsh) && \
+    npm i -g yarn --registry=http://registry.npm.taobao.org && \
     echo "root:admin" | chpasswd
 
 EXPOSE 22

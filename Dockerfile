@@ -9,4 +9,4 @@ RUN apk update && \
 
 EXPOSE 22 8080
 
-CMD ['/etc/init.d/sshd', 'start']
+CMD ["/etc/init.d/sshd", "start"]

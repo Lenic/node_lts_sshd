@@ -1,7 +1,9 @@
-FROM node:lts-alpine
+FROM alpine
 
-RUN apk update && \
-    apk add zsh git openssh-server tzdata openrc && \
+RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/latest-stable/community/" >> /etc/apk/repositories && \
+    apk update && \
+    apk add nodejs zsh git openssh-server tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     ssh-keygen -t rsa -P "" -f /etc/ssh/ssh_host_rsa_key && \
     ssh-keygen -t ecdsa -P "" -f /etc/ssh/ssh_host_ecdsa_key && \
@@ -14,4 +16,6 @@ RUN apk update && \
 
 EXPOSE 1022 8080
 
-CMD ["/etc/init.d/sshd", "-D"]
+WORKDIR /workspace
+
+CMD ["/usr/sbin/sshd", "-D"]

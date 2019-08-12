@@ -10,8 +10,7 @@ RUN apt update && \
     cd /opt && \
     wget https://nodejs.org/dist/v10.16.2/node-v10.16.2-linux-x64.tar.xz -O a.tar.xz && \
     tar -xJf a.tar.xz && \
-    rm -rf a.tar.xz && \
-    echo "PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin" >> ~/.bashrc
+    rm -rf a.tar.xz
 
 RUN PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin && \
     npm i -g yarn --registry=http://registry.npm.taobao.org && \
@@ -19,7 +18,8 @@ RUN PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin && \
     chsh -s $(which zsh) && \
     echo "root:admin" | chpasswd
 
-RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
+    echo "PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin" >> ~/.zshrc
 
 EXPOSE 22
 

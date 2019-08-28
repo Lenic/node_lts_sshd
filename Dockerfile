@@ -3,7 +3,7 @@ FROM ubuntu
 MAINTAINER Lenic (Lenic@live.cn)
 
 RUN apt update && \
-    apt install -y git vim net-tools curl zsh openssh-server language-pack-zh-hans && \
+    apt install -y git vim net-tools curl zsh openssh-server language-pack-zh-hans rsync screen && \
     locale-gen zh_CN.UTF-8 && \
     mkdir -p /var/run/sshd && \
     echo "Asia/shanghai" > /etc/timezone && \

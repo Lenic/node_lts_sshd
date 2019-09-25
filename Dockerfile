@@ -20,7 +20,7 @@ RUN PATH=$PATH:/opt/node-v10.16.3-linux-x64/bin && \
     echo "root:admin" | chpasswd
 
 RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
-    echo "PATH=$PATH:/opt/node-v10.16.2-linux-x64/bin" >> ~/.zshrc && \
+    echo "PATH=$PATH:/opt/node-v10.16.3-linux-x64/bin" >> ~/.zshrc && \
     echo "export LC_ALL='zh_CN.utf8'" >> ~/.zshrc
 
 EXPOSE 22

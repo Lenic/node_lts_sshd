@@ -9,11 +9,11 @@ RUN apt update && \
     echo "Asia/shanghai" > /etc/timezone && \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
     cd /opt && \
-    wget https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.xz -O a.tar.xz && \
+    wget https://nodejs.org/dist/v12.13.1/node-v12.13.1-linux-x64.tar.xz -O a.tar.xz && \
     tar -xJf a.tar.xz && \
     rm -rf a.tar.xz
 
-RUN PATH=$PATH:/opt/node-v10.16.3-linux-x64/bin && \
+RUN PATH=$PATH:/opt/node-v12.13.1-linux-x64/bin && \
     npm i -g yarn --registry=http://registry.npm.taobao.org && \
     echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf && \
     chsh -s $(which zsh) && \
@@ -25,6 +25,6 @@ RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/
 
 EXPOSE 22
 
-WORKDIR /workspace
+WORKDIR /root/workspace
 
 CMD ["/usr/sbin/sshd", "-D"]

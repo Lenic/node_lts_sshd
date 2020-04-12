@@ -12,6 +12,9 @@ RUN apt update && \
     apt update && \
     apt -y upgrade && \
     apt install emacs26-nox && \
+    apt autoclean && \
+    apt clean && \
+    apt -y autoremove && \
     locale-gen zh_CN.UTF-8 && \
     mkdir -p /var/run/sshd && \
     echo "Asia/shanghai" > /etc/timezone && \

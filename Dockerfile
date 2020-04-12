@@ -11,7 +11,7 @@ RUN apt update && \
     add-apt-repository ppa:kelleyk/emacs && \
     apt update && \
     apt -y upgrade && \
-    apt install emacs26-nox && \
+    apt install -y emacs26-nox && \
     apt autoclean && \
     apt clean && \
     apt -y autoremove && \

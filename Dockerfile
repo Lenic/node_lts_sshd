@@ -7,7 +7,7 @@ RUN apt update && \
     apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates software-properties-common && \
     curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
     apt install -y nodejs git vim net-tools curl zsh openssh-server && \
-    apt install -y language-pack-zh-hans rsync screen tmux && \
+    apt install -y language-pack-zh-hans rsync screen tmux silversearcher-ag && \
     add-apt-repository ppa:kelleyk/emacs && \
     apt update && \
     apt -y upgrade && \

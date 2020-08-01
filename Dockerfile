@@ -1,32 +1,26 @@
-FROM ubuntu
+FROM alpine
 
 MAINTAINER Lenic (Lenic@live.cn)
 
-RUN apt update && \
-    apt -y upgrade && \
-    apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates software-properties-common && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt install -y nodejs git vim net-tools curl zsh openssh-server && \
-    apt install -y language-pack-zh-hans rsync screen tmux silversearcher-ag && \
-    add-apt-repository ppa:kelleyk/emacs && \
-    apt update && \
-    apt -y upgrade && \
-    apt install -y emacs26-nox && \
-    apt autoclean && \
-    apt clean && \
-    apt -y autoremove && \
-    locale-gen zh_CN.UTF-8 && \
+RUN apk update && apk upgrade && \
+    apk add nodejs npm git vim curl zsh openssh-server emacs && \
+    apk add rsync screen tmux the_silver_searcher ripgrep && \
+    apk cache --purge && \
     mkdir -p /var/run/sshd && \
-    echo "Asia/shanghai" > /etc/timezone && \
-    sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
+    sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
+    ssh-keygen -y -t rsa -f /etc/ssh/ssh_host_rsa_key && \
+    apk -v cache clean && rm -f /var/cache/apk/*
 
 RUN npm i -g yarn && \
     echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf && \
-    chsh -s $(which zsh) && \
+    sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd && \
     echo "root:admin" | chpasswd
 
 RUN sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
     echo "export LC_ALL='zh_CN.utf8'" >> ~/.zshrc
+
+# 使用阿里镜像源
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 EXPOSE 22
 

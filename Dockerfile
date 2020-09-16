@@ -3,7 +3,7 @@ FROM alpine
 MAINTAINER Lenic (Lenic@live.cn)
 
 RUN apk update && apk upgrade && \
-    apk add nodejs npm git vim curl zsh openssh openssh-server emacs rsync screen tmux the_silver_searcher ripgrep tzdata diffutils && \
+    apk add nodejs npm git vim curl zsh openssh openssh-server emacs rsync screen tmux the_silver_searcher ripgrep tzdata diffutils xclip && \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
     ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N '' -q && \
     ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' -q && \

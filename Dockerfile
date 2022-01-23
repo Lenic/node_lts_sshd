@@ -13,10 +13,13 @@ RUN apk update && apk upgrade && \
     rm -f /var/cache/apk/*
 
 RUN npm i -g yarn && \
-    sh -c "$(wget -qO- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && \
     echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf && \
     sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd && \
     echo "root:admin" | chpasswd
+
+COPY ./ohmyz.sh /opt/ohmyz.sh
+
+RUN sh /opt/ohmyz.sh
 
 # 使用阿里镜像源
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories

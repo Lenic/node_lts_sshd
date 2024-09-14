@@ -17,9 +17,7 @@ RUN npm i -g yarn && \
     sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd && \
     echo "root:admin" | chpasswd
 
-COPY ./ohmyz.sh /opt/ohmyz.sh
-
-RUN sh /opt/ohmyz.sh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # 使用阿里镜像源
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories

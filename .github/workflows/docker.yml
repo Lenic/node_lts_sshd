@@ -1,0 +1,62 @@
+name: Build and push image
+
+on:
+  # Automatic builds are disabled; uncomment to enable
+  # push:
+  #   branches: [master]
+  #   paths:
+  #     - Dockerfile
+  #     - .github/workflows/docker.yml
+  # # edge changes often, so rebuild every Monday (09:00 JST)
+  # schedule:
+  #   - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+env:
+  IMAGE: lenic/node_lts_sshd
+  ALPINE_VERSION: edge
+
+jobs:
+  # Generate the date once so all architectures share it, even across midnight
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      date: ${{ steps.date.outputs.date }}
+    steps:
+      - id: date
+        run: echo "date=$(TZ=Asia/Tokyo date +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
+  # Build each architecture on its own native runner, no QEMU emulation needed
+  build:
+    needs: prepare
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux/amd64
+            arch: x86_64
+          - runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            arch: aarch64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          # Disable provenance so each tag is a plain single-architecture image
+          provenance: false
+          tags: ${{ env.IMAGE }}:${{ env.ALPINE_VERSION }}-${{ matrix.arch }}-${{ needs.prepare.outputs.date }}
+          # Skip the cache so every build gets the latest edge packages
+          no-cache: true
+          pull: true

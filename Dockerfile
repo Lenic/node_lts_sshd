@@ -3,7 +3,7 @@ FROM alpine:edge
 LABEL maintainer="Lenic (Lenic@live.cn)"
 
 RUN apk update && apk upgrade && \
-    apk add nodejs npm git vim curl zsh openssh emacs-pgtk-nativecomp rsync tmux fzf ripgrep tzdata diffutils && \
+    apk add nodejs npm git vim curl zsh openssh emacs-pgtk-nativecomp rsync tmux fzf ripgrep tzdata diffutils xclip && \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config && \
     ssh-keygen -A && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
@@ -22,8 +22,9 @@ RUN npm i -g corepack && \
         'export PATH="$PNPM_HOME:$PATH"' >> /etc/zsh/zshenv && \
     echo "set -g set-clipboard on" >> /root/.tmux.conf && \
     printf '%s\n' \
-        "alias e='emacs -nw'" \
-        "alias emacs='emacs -nw'" \
+        'alias e="emacs -nw"' \
+        'ed() { if [ -n "$1" ]; then emacs --daemon="$1"; else emacs --daemon; fi; }' \
+        'ec() { if [ -n "$1" ]; then emacsclient -t -s "$1"; else emacsclient -t; fi; }' \
         'alias tn="tmux new -s"' \
         'alias tt="tmux a -t"' \
         'alias tl="tmux ls"' >> /etc/zsh/zshrc && \

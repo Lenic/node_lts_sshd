@@ -100,7 +100,9 @@ pnpm は corepack で管理されています。プロジェクトの `package.j
 
 | エイリアス | コマンド |
 |---|---|
-| `e` / `emacs` | `emacs -nw` |
+| `e` | `emacs -nw` |
+| `eds [名前]` | `emacs --daemon[=名前]`、Emacs デーモンを起動（名前は省略可） |
+| `ec [名前]` | `emacsclient -t [-s 名前]`、ターミナルでデーモンに接続 |
 | `tn <名前>` | `tmux new -s <名前>`、セッションを作成 |
 | `tt <名前>` | `tmux a -t <名前>`、セッションに接続 |
 | `tl` | `tmux ls`、セッションを一覧表示 |
@@ -169,7 +171,7 @@ Alpine の `nodejs` パッケージは `--without-corepack` でビルドされ�
 | `emacs-gtk3-nativecomp` | 約 298MB | GTK3 + X11、native-comp 対応 |
 | `emacs-x11-nativecomp` | 約 350MB | X11、native-comp 対応 |
 
-`emacs-nox` には native-comp 版がありません。GUI 版をターミナルで使うには `-nw` が必要なため、イメージではエイリアス `e` と `emacs` を `emacs -nw` に設定しています。`-nw` を付けないと、ターミナルモードに切り替わらず `cannot open display` エラーになります。
+`emacs-nox` には native-comp 版がありません。GUI 版をターミナルで使うには `-nw` が必要なため、イメージではエイリアス `e` を `emacs -nw` に設定しています。`-nw` を付けずに `emacs` を直接実行すると、ターミナルモードに切り替わらず `cannot open display` エラーになります。`eds` + `ec` によるデーモン方式は影響を受けません。
 
 イメージサイズを重視する場合は、`emacs-nox` に戻すこともできます。
 

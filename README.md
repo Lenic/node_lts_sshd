@@ -100,7 +100,9 @@ Run `corepack use pnpm@latest` to add or update this field. Outside a project, t
 
 | Alias | Command |
 |---|---|
-| `e` / `emacs` | `emacs -nw` |
+| `e` | `emacs -nw` |
+| `eds [name]` | `emacs --daemon[=name]`, start an Emacs daemon (optionally named) |
+| `ec [name]` | `emacsclient -t [-s name]`, open a terminal frame on the daemon |
 | `tn <name>` | `tmux new -s <name>`, create a session |
 | `tt <name>` | `tmux a -t <name>`, attach to a session |
 | `tl` | `tmux ls`, list sessions |
@@ -169,7 +171,7 @@ Alpine's `emacs` package now contains only common files, **without the `emacs` e
 | `emacs-gtk3-nativecomp` | ~298MB | GTK3 + X11, with native-comp |
 | `emacs-x11-nativecomp` | ~350MB | X11, with native-comp |
 
-There is no native-comp build of `emacs-nox`. The graphical variants need `-nw` to run in a terminal, so the image aliases both `e` and `emacs` to `emacs -nw`. Without `-nw`, Emacs fails with `cannot open display` instead of falling back to terminal mode.
+There is no native-comp build of `emacs-nox`. The graphical variants need `-nw` to run in a terminal, so the image aliases `e` to `emacs -nw`. Running `emacs` directly without `-nw` fails with `cannot open display` instead of falling back to terminal mode. The `eds` + `ec` daemon workflow is not affected.
 
 If image size matters more to you, switch back to `emacs-nox`.
 

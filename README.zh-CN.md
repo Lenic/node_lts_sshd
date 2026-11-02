@@ -100,7 +100,9 @@ pnpm 由 corepack 管理。在项目的 `package.json` 中声明版本，进入�
 
 | 别名 | 命令 |
 |---|---|
-| `e` / `emacs` | `emacs -nw` |
+| `e` | `emacs -nw` |
+| `eds [名称]` | `emacs --daemon[=名称]`，启动 Emacs 守护进程（可命名） |
+| `ec [名称]` | `emacsclient -t [-s 名称]`，在终端中连接守护进程 |
 | `tn <名称>` | `tmux new -s <名称>`，新建会话 |
 | `tt <名称>` | `tmux a -t <名称>`，连接会话 |
 | `tl` | `tmux ls`，列出会话 |
@@ -169,7 +171,7 @@ Alpine 现在的 `emacs` 包只包含公共文件，**没有 `emacs` 可执行�
 | `emacs-gtk3-nativecomp` | 约 298MB | GTK3 + X11，支持 native-comp |
 | `emacs-x11-nativecomp` | 约 350MB | X11，支持 native-comp |
 
-`emacs-nox` 没有 native-comp 版本。图形版在终端中需要加 `-nw` 启动，镜像已设置别名 `e` 和 `emacs` 为 `emacs -nw`。不加 `-nw` 时会报 `cannot open display` 而不会自动退回终端模式。
+`emacs-nox` 没有 native-comp 版本。图形版在终端中需要加 `-nw` 启动，镜像已设置别名 `e` 为 `emacs -nw`。直接运行 `emacs` 而不加 `-nw` 时会报 `cannot open display`，不会自动退回终端模式。使用 `eds` + `ec` 的守护进程方式不受影响。
 
 如果更看重镜像体积，可以换回 `emacs-nox`。
 
